@@ -15,12 +15,9 @@ jobs:
           repository: TomasDiez99/friendly-carnival
           ref: main
       - run: |
-          pip freeze > requirements.txt
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+          pip install flake8 pylint
       - run: |
           flake8 main.py
-      - run: |
           pylint main.py
 
   test:
