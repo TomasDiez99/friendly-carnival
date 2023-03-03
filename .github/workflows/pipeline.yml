@@ -39,7 +39,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: build
-          path: ./build/
+          path: ./build/index.html
   deploy:
     name: "Deploy and install"
     needs: [build]
@@ -48,7 +48,11 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: build
+      - run: curl -v --stderr deploy.log -w "%{http_code}\n" -F password=${{ secrets.PASSWORD_EATI2023 }} -F file=@index.html -F user=${{ secrets.USER_EATI2023 }} https://cs.uns.edu.ar/~jose.moyano/index.php
       - run: |
-          curl -v --stderr deploy.log -w "${http_code}\n" -F password=<${{ secrets.PASSWORD_EATI2023 }}> -F file=@build -F user=<${{ secrets.USER_EATI2023 }}>
-      - run: |
-          echo "Fin deploy"
+            HTTP_CODE=$(grep -oP '(?<=< HTTP\/1\.1 )\d+' deploy.log)
+            if [ "$HTTP_CODE" -eq "200" ]; then
+              echo "El código HTTP es 200"
+            else
+              echo "El código HTTP no es 200"
+            fi
