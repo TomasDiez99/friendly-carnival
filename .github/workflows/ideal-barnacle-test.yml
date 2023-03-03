@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: TomasDiez99/ideal-barnacle@main
-      - run: echo "Fin workflow"
+      - run: echo "Fin workflow!"
