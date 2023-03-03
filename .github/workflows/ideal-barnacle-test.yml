@@ -1,4 +1,4 @@
-name: Ideal Barnacle Custom Actions Test
+name: Random pokemon Custom Action Test
 
 on:
   push:
